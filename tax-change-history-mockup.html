@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tax Change History — Mockup</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 220px;
+      background: #fff;
+      border-right: 1px solid #e8e8e8;
+      flex-shrink: 0;
+      padding-top: 8px;
+    }
+    .sidebar-header {
+      padding: 16px 20px 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.8px;
+    }
+    .sidebar-nav { list-style: none; }
+    .sidebar-nav li {
+      padding: 8px 20px;
+      font-size: 13.5px;
+      color: #555;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+    }
+    .sidebar-nav li:hover { background: #f9f9f9; color: #222; }
+    .sidebar-nav li.active {
+      color: #558B2F;
+      font-weight: 600;
+      border-left-color: #8BC34A;
+      background: #F1F8E9;
+    }
+
+    /* ── Main ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .main-header {
+      padding: 18px 28px;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #111;
+      border-bottom: 1px solid #e8e8e8;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mockup-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: #E65100;
+      background: #FFF3E0;
+      border: 1px solid #FFCC80;
+      border-radius: 4px;
+      padding: 3px 8px;
+    }
+
+    .content {
+      padding: 20px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* ── Accordion ── */
+    .accordion {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: #222;
+    }
+    .accordion-header:hover { background: #fafafa; }
+
+    .chevron {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.18s;
+      color: #aaa;
+    }
+    .accordion.open .chevron { transform: rotate(180deg); }
+
+    .accordion-body {
+      display: none;
+      padding: 18px;
+      border-top: 1px solid #e8e8e8;
+    }
+    .accordion.open .accordion-body { display: block; }
+
+    /* ── History accordion ── */
+    .history-accordion .accordion-header {
+      background: #F1F8E9;
+    }
+    .history-accordion .accordion-header:hover { background: #e8f5e9; }
+
+    .history-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #33691E;
+    }
+
+    .no-earlier-history td {
+      text-align: center;
+      font-size: 12.5px;
+      color: #aaa;
+      padding: 12px;
+      border-bottom: none;
+    }
+
+    /* ── Table ── */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+    thead tr { border-bottom: 2px solid #e0e0e0; }
+
+    th {
+      padding: 8px 12px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 10px 12px;
+      color: #333;
+      border-bottom: 1px solid #f2f2f2;
+      vertical-align: top;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .col-ts    { white-space: nowrap; color: #555; }
+    .col-muted { color: #bbb; }
+
+    /* ── Pagination ── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #777;
+    }
+    .page-btns { display: flex; gap: 6px; align-items: center; }
+    .page-btn {
+      padding: 5px 12px;
+      border: 1px solid #d8d8d8;
+      border-radius: 5px;
+      background: #fff;
+      font-size: 13px;
+      color: #444;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .page-btn:hover:not([disabled]) { border-color: #8BC34A; color: #558B2F; }
+    .page-btn[disabled] { opacity: 0.35; cursor: default; }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">CONFIG</div>
+    <ul class="sidebar-nav">
+      <li>Basic Configurations</li>
+      <li>Cash Handling</li>
+      <li>Customer Management</li>
+      <li>Delivery</li>
+      <li>Discounts And Rewards</li>
+      <li>eCommerce</li>
+      <li>Fulfillment</li>
+      <li>Hardware</li>
+      <li>Integration</li>
+      <li>Inventory</li>
+      <li>Label</li>
+      <li>Notifications</li>
+      <li>Online Menu Threshold</li>
+      <li>Point of Sale</li>
+      <li>Receipt</li>
+      <li class="active">Taxes</li>
+      <li>Users</li>
+    </ul>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="main-header">
+      TAXES
+      <span class="mockup-badge">MOCKUP</span>
+    </div>
+
+    <div class="content">
+
+      <div class="accordion" onclick="toggle(this)">
+        <div class="accordion-header">
+          <span>Tax Rates</span>
+          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
+        </div>
+        <div class="accordion-body">Tax rates configuration here.</div>
+      </div>
+
+      <div class="accordion" onclick="toggle(this)">
+        <div class="accordion-header">
+          <span>Discount &amp; Tax Calculation</span>
+          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
+        </div>
+        <div class="accordion-body">Discount and tax calculation settings here.</div>
+      </div>
+
+      <div class="accordion" onclick="toggle(this)">
+        <div class="accordion-header">
+          <span>Point of Sale Tax Setup</span>
+          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
+        </div>
+        <div class="accordion-body">POS tax setup here.</div>
+      </div>
+
+      <div class="accordion" onclick="toggle(this)">
+        <div class="accordion-header">
+          <span>Custom Tax</span>
+          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
+        </div>
+        <div class="accordion-body">Custom tax settings here.</div>
+      </div>
+
+      <div class="accordion" onclick="toggle(this)">
+        <div class="accordion-header">
+          <span>Post-Tax</span>
+          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
+        </div>
+        <div class="accordion-body">Post-tax settings here.</div>
+      </div>
+
+      <!-- Change History -->
+      <div class="accordion history-accordion open">
+        <div class="accordion-header" onclick="toggle(this.closest('.accordion'))">
+          <span class="history-title">Change History</span>
+          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="#558B2F" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
+        </div>
+        <div class="accordion-body">
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date / Time</th>
+                  <th>User</th>
+                  <th>Source</th>
+                  <th>Section</th>
+                  <th>Patient Type</th>
+                  <th>Label</th>
+                  <th>Field</th>
+                  <th>Change</th>
+                  <th>Previous Value</th>
+                  <th>New Value</th>
+                </tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+
+          <div class="pagination">
+            <span id="page-info"></span>
+            <div class="page-btns">
+              <button class="page-btn" id="btn-prev" onclick="goPage(currentPage - 1)">&#8592; Prev</button>
+              <span id="page-label"></span>
+              <button class="page-btn" id="btn-next" onclick="goPage(currentPage + 1)">Next &#8594;</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+const ROWS = [
+  { ts:'Jun 24, 2026 9:12 AM',  user:'Sarah Chen',  source:'User',               section:'Tax Rates',           patient:'—',        label:'—',                  field:'Default Sales Tax Rate',        change:'Updated', old:'8.5',              val:'9.0' },
+  { ts:'Jun 24, 2026 9:12 AM',  user:'Sarah Chen',  source:'Tax Rates Shortcut', section:'POS Tax Setup',        patient:'Medical',  label:'Sales Tax',          field:'Rate',                          change:'Updated', old:'8.5',              val:'9.0' },
+  { ts:'Jun 24, 2026 9:12 AM',  user:'Sarah Chen',  source:'Tax Rates Shortcut', section:'POS Tax Setup',        patient:'Adult Use',label:'State Sales Tax',     field:'Rate',                          change:'Updated', old:'8.5',              val:'9.0' },
+  { ts:'Jun 24, 2026 10:05 AM', user:'Sarah Chen',  source:'User',               section:'POS Tax Setup',        patient:'Medical',  label:'CA State Sales Tax',  field:'Tax Label',                     change:'Updated', old:'Sales Tax',         val:'CA State Sales Tax' },
+  { ts:'Jun 24, 2026 10:05 AM', user:'Sarah Chen',  source:'User',               section:'POS Tax Setup',        patient:'Medical',  label:'CA State Sales Tax',  field:'Rate',                          change:'Updated', old:'9.0',              val:'9.25' },
+  { ts:'Jun 24, 2026 10:05 AM', user:'Sarah Chen',  source:'User',               section:'POS Tax Setup',        patient:'Medical',  label:'CA State Sales Tax',  field:'Applies To Products',           change:'Updated', old:'ALL',              val:'FLOWER' },
+  { ts:'Jun 24, 2026 11:33 AM', user:'Marcus Webb', source:'User',               section:'POS Tax Setup',        patient:'Adult Use',label:'—',                  field:'Layer Name',                    change:'Created', old:'—',                val:'City Tax' },
+  { ts:'Jun 24, 2026 11:40 AM', user:'Marcus Webb', source:'User',               section:'POS Tax Setup',        patient:'Adult Use',label:'—',                  field:'Tax Label',                     change:'Created', old:'—',                val:'City Excise Tax' },
+  { ts:'Jun 24, 2026 2:02 PM',  user:'Marcus Webb', source:'User',               section:'POS Tax Setup',        patient:'Adult Use',label:'City Tax Layer',       field:'Layer Order',                   change:'Updated', old:'3',                val:'1' },
+  { ts:'Jun 24, 2026 2:02 PM',  user:'Marcus Webb', source:'User',               section:'POS Tax Setup',        patient:'Adult Use',label:'Sales Tax Layer',      field:'Layer Order',                   change:'Updated', old:'1',                val:'2' },
+  { ts:'Jun 24, 2026 3:18 PM',  user:'Sarah Chen',  source:'User',               section:'POS Tax Setup',        patient:'Adult Use',label:'City Tax Layer',       field:'Layer Name',                    change:'Deleted', old:'City Tax',         val:'—' },
+  { ts:'Jun 24, 2026 3:18 PM',  user:'Sarah Chen',  source:'User',               section:'POS Tax Setup',        patient:'Adult Use',label:'City Excise Tax',     field:'Tax Label',                     change:'Deleted', old:'City Excise Tax',  val:'—' },
+  { ts:'Jun 24, 2026 3:44 PM',  user:'TREEZ ADMIN',  source:'User',              section:'Discount & Tax Calc',  patient:'—',        label:'—',                  field:'Calculate Tax After Discounts', change:'Updated', old:'false',            val:'true' },
+  { ts:'Jun 24, 2026 3:51 PM',  user:'Sarah Chen',  source:'User',               section:'Custom Tax',           patient:'—',        label:'—',                  field:'Tax Label Name',                change:'Created', old:'—',                val:'Delivery Excise' },
+  { ts:'Jun 24, 2026 4:03 PM',  user:'Marcus Webb', source:'User',               section:'Custom Tax',           patient:'—',        label:'CA Delivery Excise',  field:'Tax Label Name',                change:'Updated', old:'Delivery Excise',  val:'CA Delivery Excise' },
+  { ts:'Jun 24, 2026 4:10 PM',  user:'Marcus Webb', source:'User',               section:'Custom Tax',           patient:'—',        label:'CA Delivery Excise',  field:'Tax Label Name',                change:'Deleted', old:'CA Delivery Excise',val:'—' },
+  { ts:'Jun 24, 2026 4:22 PM',  user:'Sarah Chen',  source:'User',               section:'Post-Tax',             patient:'—',        label:'—',                  field:'Post-Tax Enabled',              change:'Updated', old:'false',            val:'true' },
+];
+
+const PAGE_SIZE = 10;
+let currentPage = 1;
+const totalPages = Math.ceil(ROWS.length / PAGE_SIZE);
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function render() {
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const rows = ROWS.slice(start, start + PAGE_SIZE);
+
+  document.getElementById('tbody').innerHTML = rows.map(r => `
+    <tr>
+      <td class="col-ts">${esc(r.ts)}</td>
+      <td>${esc(r.user)}</td>
+      <td>${esc(r.source)}</td>
+      <td>${esc(r.section)}</td>
+      <td class="${r.patient === '—' ? 'col-muted' : ''}">${esc(r.patient)}</td>
+      <td class="${r.label === '—' ? 'col-muted' : ''}">${esc(r.label)}</td>
+      <td>${esc(r.field)}</td>
+      <td>${esc(r.change)}</td>
+      <td class="${r.old === '—' ? 'col-muted' : ''}">${esc(r.old)}</td>
+      <td class="${r.val === '—' ? 'col-muted' : ''}">${esc(r.val)}</td>
+    </tr>`).join('');
+
+  if (currentPage === totalPages) {
+    document.getElementById('tbody').innerHTML +=
+      `<tr class="no-earlier-history"><td colspan="10">No earlier history available.</td></tr>`;
+  }
+
+  const end = Math.min(start + PAGE_SIZE, ROWS.length);
+  document.getElementById('page-info').textContent = `Showing ${start + 1}–${end} of ${ROWS.length} changes`;
+  document.getElementById('page-label').textContent = `Page ${currentPage} of ${totalPages}`;
+  document.getElementById('btn-prev').disabled = currentPage <= 1;
+  document.getElementById('btn-next').disabled = currentPage >= totalPages;
+}
+
+function goPage(n) {
+  currentPage = Math.max(1, Math.min(n, totalPages));
+  render();
+}
+
+function toggle(el) {
+  el.classList.toggle('open');
+}
+
+render();
+</script>
+</body>
+</html>
