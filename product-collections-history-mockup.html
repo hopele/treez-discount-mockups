@@ -13,60 +13,42 @@
       color: #1a1a1a;
       min-height: 100vh;
       display: flex;
-    }
-
-    /* ── Sidebar ── */
-    .sidebar {
-      width: 220px;
-      background: #fff;
-      border-right: 1px solid #e8e8e8;
-      flex-shrink: 0;
-      padding-top: 8px;
-    }
-    .sidebar-header {
-      padding: 16px 20px 10px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #888;
-      letter-spacing: 0.8px;
-    }
-    .sidebar-nav { list-style: none; }
-    .sidebar-nav li {
-      padding: 8px 20px;
-      font-size: 13.5px;
-      color: #555;
-      cursor: pointer;
-      border-left: 3px solid transparent;
-    }
-    .sidebar-nav li:hover { background: #f9f9f9; color: #222; }
-    .sidebar-nav li.active {
-      color: #558B2F;
-      font-weight: 600;
-      border-left-color: #8BC34A;
-      background: #F1F8E9;
-    }
-
-    /* ── Main ── */
-    .main {
-      flex: 1;
-      display: flex;
       flex-direction: column;
-      min-width: 0;
     }
 
-    .main-header {
-      padding: 18px 28px;
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: #111;
-      border-bottom: 1px solid #e8e8e8;
+    /* ── Top nav ── */
+    .top-nav {
       background: #fff;
+      border-bottom: 1px solid #ddd;
       display: flex;
       align-items: center;
-      gap: 12px;
+      padding: 0 20px;
+      gap: 0;
+      height: 48px;
+      flex-shrink: 0;
     }
-
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 800;
+      color: #558B2F;
+      margin-right: 24px;
+      letter-spacing: -0.5px;
+    }
+    .nav-tab {
+      padding: 0 16px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #555;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    .nav-tab.active {
+      color: #558B2F;
+      border-bottom-color: #8BC34A;
+      font-weight: 600;
+    }
     .mockup-badge {
       font-size: 10.5px;
       font-weight: 700;
@@ -76,286 +58,607 @@
       border: 1px solid #FFCC80;
       border-radius: 4px;
       padding: 3px 8px;
+      margin-left: auto;
     }
 
-    .content {
-      padding: 20px 28px;
+    /* ── Page body ── */
+    .page-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ── Collections main area ── */
+    .collections-main {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      min-width: 0;
+      overflow: auto;
     }
 
-    /* ── Accordion ── */
-    .accordion {
+    /* Toolbar */
+    .toolbar {
       background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .accordion-header {
-      padding: 14px 18px;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 8px 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      user-select: none;
-      font-size: 14px;
-      font-weight: 500;
-      color: #222;
+      gap: 8px;
+      flex-shrink: 0;
     }
-    .accordion-header:hover { background: #fafafa; }
-
-    .chevron {
-      width: 16px;
-      height: 16px;
-      transition: transform 0.18s;
-      color: #aaa;
+    .selected-bar {
+      background: #E8F5E9;
+      border-bottom: 1px solid #C8E6C9;
+      padding: 7px 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      flex-shrink: 0;
     }
-    .accordion.open .chevron { transform: rotate(180deg); }
-
-    .accordion-body {
-      display: none;
-      padding: 18px;
-      border-top: 1px solid #e8e8e8;
-    }
-    .accordion.open .accordion-body { display: block; }
-
-    /* ── History accordion ── */
-    .history-accordion .accordion-header {
-      background: #F1F8E9;
-    }
-    .history-accordion .accordion-header:hover { background: #e8f5e9; }
-
-    .history-title {
-      font-size: 14px;
+    .selected-count {
       font-weight: 600;
-      color: #33691E;
+      color: #2E7D32;
     }
-
-    .no-earlier-history td {
-      text-align: center;
+    .sel-x {
+      font-size: 13px;
+      color: #888;
+      cursor: pointer;
+      padding: 0 4px;
+    }
+    .sel-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
       font-size: 12.5px;
-      color: #aaa;
-      padding: 12px;
-      border-bottom: none;
+      color: #444;
+      cursor: pointer;
+      background: #fff;
+      margin-left: 4px;
     }
-
-    /* ── Table ── */
-    .table-wrap {
-      overflow-x: auto;
+    .sel-action:hover { background: #f5f5f5; }
+    .sel-action.highlight {
+      border-color: #8BC34A;
+      color: #558B2F;
+      font-weight: 600;
+      background: #fff;
     }
+    .sel-action.highlight:hover { background: #F1F8E9; }
 
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    /* Filter chips */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 11px;
+      border: 1px solid #d0d0d0;
+      border-radius: 20px;
+      font-size: 13px;
+      color: #333;
+      cursor: pointer;
+      background: #fff;
+    }
+    .chip:hover { border-color: #aaa; }
+    .chip svg { width: 12px; height: 12px; color: #999; }
 
-    thead tr { border-bottom: 2px solid #e0e0e0; }
-
+    /* Table */
+    .table-wrap { overflow: auto; flex: 1; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; }
+    thead tr { border-bottom: 1px solid #e0e0e0; background: #fff; }
     th {
-      padding: 8px 12px;
+      padding: 9px 14px;
       text-align: left;
       font-size: 12px;
       font-weight: 600;
       color: #666;
       white-space: nowrap;
+      border-bottom: 2px solid #e0e0e0;
     }
-
     td {
-      padding: 10px 12px;
+      padding: 10px 14px;
       color: #333;
-      border-bottom: 1px solid #f2f2f2;
-      vertical-align: top;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: middle;
     }
-    tbody tr:last-child td { border-bottom: none; }
+    tr.selected td { background: #F1F8E9; }
+    tbody tr:hover td { background: #fafafa; }
+    tr.selected:hover td { background: #e8f5e9; }
+    .cb { width: 16px; height: 16px; accent-color: #8BC34A; cursor: pointer; }
+    .status-pill {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .status-active { background: #E8F5E9; color: #2E7D32; }
+    .status-draft   { background: #F5F5F5; color: #777; }
+    .status-archived{ background: #FFF8E1; color: #F57F17; }
 
-    .col-ts    { white-space: nowrap; color: #555; }
-    .col-muted { color: #bbb; }
-
-    /* ── Pagination ── */
-    .pagination {
+    /* Pagination */
+    .table-footer {
+      background: #fff;
+      border-top: 1px solid #e8e8e8;
+      padding: 8px 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-top: 14px;
+      gap: 6px;
       font-size: 13px;
       color: #777;
+      flex-shrink: 0;
     }
-    .page-btns { display: flex; gap: 6px; align-items: center; }
-    .page-btn {
-      padding: 5px 12px;
+    .pg-btn {
+      width: 30px; height: 30px;
       border: 1px solid #d8d8d8;
       border-radius: 5px;
       background: #fff;
       font-size: 13px;
       color: #444;
       cursor: pointer;
-      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
-    .page-btn:hover:not([disabled]) { border-color: #8BC34A; color: #558B2F; }
-    .page-btn[disabled] { opacity: 0.35; cursor: default; }
+    .pg-btn.current { background: #8BC34A; border-color: #8BC34A; color: #fff; font-weight: 700; cursor: default; }
+    .pg-btn:hover:not(.current) { border-color: #8BC34A; color: #558B2F; }
+
+    /* ── History Log Drawer ── */
+    .drawer {
+      width: 520px;
+      flex-shrink: 0;
+      background: #fff;
+      border-left: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .drawer-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .drawer-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111;
+    }
+    .drawer-close {
+      font-size: 18px;
+      color: #aaa;
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+      padding: 2px 4px;
+    }
+    .drawer-close:hover { color: #333; }
+
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 20px 0 20px;
+    }
+
+    /* Timeline */
+    .timeline { position: relative; }
+
+    .tl-entry {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .tl-dot-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      padding-top: 3px;
+    }
+    .tl-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #bbb;
+      flex-shrink: 0;
+    }
+    .tl-line {
+      flex: 1;
+      width: 1px;
+      background: #e8e8e8;
+      margin-top: 4px;
+    }
+
+    .tl-content { flex: 1; min-width: 0; }
+
+    .tl-meta {
+      font-size: 12.5px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .tl-event {
+      margin-bottom: 10px;
+    }
+    .tl-event-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 4px;
+    }
+    .tl-event ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .tl-event ul li {
+      font-size: 13px;
+      color: #444;
+      padding: 1px 0 1px 14px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .tl-event ul li::before {
+      content: "•";
+      position: absolute;
+      left: 2px;
+      color: #999;
+    }
+
+    .tl-recording-started {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    .drawer-footer {
+      padding: 14px 20px;
+      border-top: 1px solid #e8e8e8;
+      display: flex;
+      justify-content: flex-end;
+      flex-shrink: 0;
+    }
+    .btn-close {
+      padding: 8px 24px;
+      background: #8BC34A;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-close:hover { background: #7CB342; }
   </style>
 </head>
 <body>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="sidebar-header">CATALOG</div>
-    <ul class="sidebar-nav">
-      <li>Products</li>
-      <li>Brands</li>
-      <li>Categories</li>
-      <li class="active">Collections</li>
-      <li>Tags</li>
-      <li>Pricing Tiers</li>
-      <li>Rooms</li>
-    </ul>
+  <!-- Top nav -->
+  <div class="top-nav">
+    <div class="nav-logo">Z</div>
+    <div class="nav-tab">Products</div>
+    <div class="nav-tab">Pricing</div>
+    <div class="nav-tab">Price Tiers</div>
+    <div class="nav-tab active">Collections</div>
+    <div class="nav-tab">Manage</div>
+    <span class="mockup-badge">MOCKUP</span>
   </div>
 
-  <!-- Main -->
-  <div class="main">
-    <div class="main-header">
-      PRODUCT COLLECTIONS
-      <span class="mockup-badge">MOCKUP</span>
+  <div class="page-body">
+
+    <!-- Collections list (background) -->
+    <div class="collections-main">
+
+      <!-- Filter chips toolbar -->
+      <div class="toolbar">
+        <div class="chip">Category <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg></div>
+        <div class="chip">Status <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg></div>
+        <div class="chip">Channel <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg></div>
+      </div>
+
+      <!-- Selected bar -->
+      <div class="selected-bar">
+        <span class="selected-count">1 Selected</span>
+        <span class="sel-x">✕</span>
+        <span class="sel-action highlight">⊕ View History Log</span>
+        <span class="sel-action">✎ Edit Collection</span>
+        <span class="sel-action">⊘ Archive</span>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:36px"><input type="checkbox" class="cb" /></th>
+              <th>Collection Name</th>
+              <th>Products</th>
+              <th>Channel</th>
+              <th>Status</th>
+              <th>Last Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="selected">
+              <td><input type="checkbox" class="cb" checked /></td>
+              <td><strong>Weekend Specials</strong></td>
+              <td>17</td>
+              <td>Storefront, POS</td>
+              <td><span class="status-pill status-active">Active</span></td>
+              <td>Jun 24, 2026</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="cb" /></td>
+              <td><strong>Flash Sale — June</strong></td>
+              <td>7</td>
+              <td>Storefront</td>
+              <td><span class="status-pill status-active">Active</span></td>
+              <td>Jun 24, 2026</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="cb" /></td>
+              <td><strong>Top Shelf Flower</strong></td>
+              <td>12</td>
+              <td>Storefront, POS</td>
+              <td><span class="status-pill status-active">Active</span></td>
+              <td>Jun 21, 2026</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="cb" /></td>
+              <td><strong>Summer Edibles</strong></td>
+              <td>9</td>
+              <td>Storefront</td>
+              <td><span class="status-pill status-active">Active</span></td>
+              <td>Jun 23, 2026</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="cb" /></td>
+              <td><strong>Staff Picks — June</strong></td>
+              <td>8</td>
+              <td>Storefront</td>
+              <td><span class="status-pill status-draft">Draft</span></td>
+              <td>Jun 19, 2026</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="cb" /></td>
+              <td><strong>Staff Picks — May</strong></td>
+              <td>6</td>
+              <td>Storefront</td>
+              <td><span class="status-pill status-draft">Unpublished</span></td>
+              <td>Jun 22, 2026</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="cb" /></td>
+              <td><strong>Spring Clearance</strong></td>
+              <td>21</td>
+              <td>Storefront, POS</td>
+              <td><span class="status-pill status-archived">Archived</span></td>
+              <td>Jun 20, 2026</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="table-footer">
+        <span style="margin-right:8px">7 rows</span>
+        <button class="pg-btn current">1</button>
+        <button class="pg-btn">2</button>
+        <button class="pg-btn">3</button>
+        <span style="margin:0 2px">…</span>
+        <button class="pg-btn">12</button>
+        <button class="pg-btn" style="width:auto;padding:0 10px;">›</button>
+      </div>
     </div>
 
-    <div class="content">
-
-      <div class="accordion" onclick="toggle(this)">
-        <div class="accordion-header">
-          <span>Collections List</span>
-          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
-        </div>
-        <div class="accordion-body">Collections list and management here.</div>
+    <!-- History Log Drawer -->
+    <div class="drawer">
+      <div class="drawer-header">
+        <span class="drawer-title">Collection History Log</span>
+        <button class="drawer-close">✕</button>
       </div>
 
-      <div class="accordion" onclick="toggle(this)">
-        <div class="accordion-header">
-          <span>Auto-Populate Rules</span>
-          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
-        </div>
-        <div class="accordion-body">Auto-populate rule settings here.</div>
-      </div>
+      <div class="drawer-body">
+        <div class="timeline">
 
-      <div class="accordion" onclick="toggle(this)">
-        <div class="accordion-header">
-          <span>Display Settings</span>
-          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
-        </div>
-        <div class="accordion-body">Display settings here.</div>
-      </div>
-
-      <!-- Change History -->
-      <div class="accordion history-accordion open">
-        <div class="accordion-header" onclick="toggle(this.closest('.accordion'))">
-          <span class="history-title">Change History</span>
-          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="#558B2F" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
-        </div>
-        <div class="accordion-body">
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Date / Time</th>
-                  <th>User</th>
-                  <th>Collection</th>
-                  <th>Action</th>
-                  <th>Field</th>
-                  <th>Previous Value</th>
-                  <th>New Value</th>
-                </tr>
-              </thead>
-              <tbody id="tbody"></tbody>
-            </table>
+          <!-- Entry 1 -->
+          <div class="tl-entry">
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-meta">24 June 2026, 03:41 PM &nbsp;·&nbsp; Megan R.</div>
+              <div class="tl-event">
+                <div class="tl-event-title">Weekend Specials updated</div>
+                <ul>
+                  <li>3 products were added</li>
+                  <li>Blue Dream 1g Pre-Roll was added</li>
+                  <li>Sour Diesel Cart 500mg was added</li>
+                  <li>Watermelon Gummies 100mg was added</li>
+                </ul>
+              </div>
+            </div>
           </div>
 
-          <div class="pagination">
-            <span id="page-info"></span>
-            <div class="page-btns">
-              <button class="page-btn" id="btn-prev" onclick="goPage(currentPage - 1)">&#8592; Prev</button>
-              <span id="page-label"></span>
-              <button class="page-btn" id="btn-next" onclick="goPage(currentPage + 1)">Next &#8594;</button>
+          <!-- Entry 2 -->
+          <div class="tl-entry">
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-meta">24 June 2026, 02:15 PM &nbsp;·&nbsp; Derek T.</div>
+              <div class="tl-event">
+                <div class="tl-event-title">Flash Sale — June updated</div>
+                <ul>
+                  <li>Status was set to Published</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Entry 3 -->
+          <div class="tl-entry">
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-meta">24 June 2026, 11:08 AM &nbsp;·&nbsp; Megan R.</div>
+              <div class="tl-event">
+                <div class="tl-event-title">Top Shelf Flower updated</div>
+                <ul>
+                  <li>Price filter was set to $30+</li>
+                  <li>THC filter was set to 25%+</li>
+                  <li>Auto-populate rules were updated</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Entry 4 -->
+          <div class="tl-entry">
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-meta">23 June 2026, 05:52 PM &nbsp;·&nbsp; Alex J.</div>
+              <div class="tl-event">
+                <div class="tl-event-title">Summer Edibles updated</div>
+                <ul>
+                  <li>Name was set to Summer Edibles</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Entry 5 -->
+          <div class="tl-entry">
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-meta">23 June 2026, 04:17 PM &nbsp;·&nbsp; Sam W.</div>
+              <div class="tl-event">
+                <div class="tl-event-title">Flash Sale — June collection created</div>
+                <ul>
+                  <li>Status was set to Draft</li>
+                  <li>7 products were added</li>
+                  <li>OG Kush 3.5g was added</li>
+                  <li>Zkittlez Live Resin was added</li>
+                  <li>Mango Tango Gummies 200mg was added</li>
+                  <li>Blueberry Haze Cart 1g was added</li>
+                  <li>Wedding Cake Pre-Roll 2pk was added</li>
+                  <li>Purple Punch Flower 7g was added</li>
+                  <li>Durban Poison Distillate was added</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Entry 6 -->
+          <div class="tl-entry">
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-meta">23 June 2026, 01:30 PM &nbsp;·&nbsp; Megan R.</div>
+              <div class="tl-event">
+                <div class="tl-event-title">Weekend Specials updated</div>
+                <ul>
+                  <li>2 products were removed</li>
+                  <li>Grape Ape Flower 1g was removed</li>
+                  <li>Lemon Haze Tincture 300mg was removed</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Entry 7 -->
+          <div class="tl-entry">
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-meta">22 June 2026, 10:05 AM &nbsp;·&nbsp; Derek T.</div>
+              <div class="tl-event">
+                <div class="tl-event-title">Staff Picks — May updated</div>
+                <ul>
+                  <li>Status was set to Unpublished</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Entry 8 -->
+          <div class="tl-entry">
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-meta">21 June 2026, 03:00 PM &nbsp;·&nbsp; Jordan K.</div>
+              <div class="tl-event">
+                <div class="tl-event-title">Top Shelf Flower updated</div>
+                <ul>
+                  <li>Display name was set to Top Shelf Flower</li>
+                  <li>Description was updated</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Entry 9 -->
+          <div class="tl-entry">
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-meta">20 June 2026, 09:47 AM &nbsp;·&nbsp; Sam W.</div>
+              <div class="tl-event">
+                <div class="tl-event-title">Spring Clearance updated</div>
+                <ul>
+                  <li>Status was set to Archived</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Entry 10 — Recording Started -->
+          <div class="tl-entry">
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+            </div>
+            <div class="tl-content">
+              <div class="tl-meta">1 June 2026, 12:00 AM</div>
+              <div class="tl-recording-started">Collection History Recording Started</div>
             </div>
           </div>
 
         </div>
       </div>
 
+      <div class="drawer-footer">
+        <button class="btn-close">Close</button>
+      </div>
     </div>
+
   </div>
 
-<script>
-const ROWS = [
-  { ts:'Jun 24, 2026 3:41 PM',  user:'Megan R.',    collection:'Weekend Specials',   action:'Updated',   field:'Products',            old:'14 products',                    val:'17 products' },
-  { ts:'Jun 24, 2026 3:41 PM',  user:'Megan R.',    collection:'Weekend Specials',   action:'Updated',   field:'Products Added',       old:'—',                              val:'Blue Dream 1g Pre-Roll, Sour Diesel Cart 500mg, Watermelon Gummies 100mg' },
-  { ts:'Jun 24, 2026 2:15 PM',  user:'Derek T.',    collection:'Flash Sale — June',  action:'Updated',   field:'Status',               old:'Draft',                          val:'Published' },
-  { ts:'Jun 24, 2026 11:08 AM', user:'Megan R.',    collection:'Top Shelf Flower',   action:'Updated',   field:'Auto-Populate Rules',  old:'Category: Flower; Price: any',   val:'Category: Flower; Price: $30+; THC: 25%+' },
-  { ts:'Jun 24, 2026 11:08 AM', user:'Megan R.',    collection:'Top Shelf Flower',   action:'Updated',   field:'Price Filter',         old:'Any',                            val:'$30+' },
-  { ts:'Jun 24, 2026 11:08 AM', user:'Megan R.',    collection:'Top Shelf Flower',   action:'Updated',   field:'THC Filter',           old:'Any',                            val:'25%+' },
-  { ts:'Jun 23, 2026 5:52 PM',  user:'Alex J.',     collection:'Summer Edibles',     action:'Updated',   field:'Name',                 old:'June Edibles',                   val:'Summer Edibles' },
-  { ts:'Jun 23, 2026 4:17 PM',  user:'Sam W.',      collection:'Flash Sale — June',  action:'Created',   field:'Name',                 old:'—',                              val:'Flash Sale — June' },
-  { ts:'Jun 23, 2026 4:17 PM',  user:'Sam W.',      collection:'Flash Sale — June',  action:'Created',   field:'Products',             old:'—',                              val:'7 products' },
-  { ts:'Jun 23, 2026 4:17 PM',  user:'Sam W.',      collection:'Flash Sale — June',  action:'Created',   field:'Status',               old:'—',                              val:'Draft' },
-  { ts:'Jun 23, 2026 1:30 PM',  user:'Megan R.',    collection:'Weekend Specials',   action:'Updated',   field:'Products',             old:'16 products',                    val:'14 products' },
-  { ts:'Jun 23, 2026 1:30 PM',  user:'Megan R.',    collection:'Weekend Specials',   action:'Updated',   field:'Products Removed',     old:'Grape Ape Flower 1g, Lemon Haze Tincture 300mg', val:'—' },
-  { ts:'Jun 22, 2026 10:05 AM', user:'Derek T.',    collection:'Staff Picks — May',  action:'Updated',   field:'Status',               old:'Published',                      val:'Unpublished' },
-  { ts:'Jun 21, 2026 3:00 PM',  user:'Jordan K.',   collection:'Top Shelf Flower',   action:'Updated',   field:'Display Name',         old:'Premium Flower',                 val:'Top Shelf Flower' },
-  { ts:'Jun 21, 2026 3:00 PM',  user:'Jordan K.',   collection:'Top Shelf Flower',   action:'Updated',   field:'Description',          old:'Our finest flower selection.',   val:'Handpicked top-shelf flower, 25%+ THC.' },
-  { ts:'Jun 20, 2026 9:47 AM',  user:'Sam W.',      collection:'Spring Clearance',   action:'Archived',  field:'Status',               old:'Published',                      val:'Archived' },
-  { ts:'Jun 19, 2026 2:22 PM',  user:'Megan R.',    collection:'Staff Picks — June', action:'Updated',   field:'Products',             old:'3 products',                     val:'8 products' },
-  { ts:'Jun 19, 2026 2:22 PM',  user:'Megan R.',    collection:'Staff Picks — June', action:'Updated',   field:'Products Added',       old:'—',                              val:'Gelato 33 Pre-Roll, Pineapple Express Vape, Strawberry Banana Wax, Cherry Pie Flower 3.5g, CBD Relief Tincture 600mg' },
-  { ts:'Jun 18, 2026 11:15 AM', user:'Derek T.',    collection:'Staff Picks — June', action:'Created',   field:'Name',                 old:'—',                              val:'Staff Picks — June' },
-  { ts:'Jun 18, 2026 11:15 AM', user:'Derek T.',    collection:'Staff Picks — June', action:'Created',   field:'Status',               old:'—',                              val:'Draft' },
-  { ts:'Jun 17, 2026 4:08 PM',  user:'Alex J.',     collection:'Summer Edibles',     action:'Updated',   field:'Display Order',        old:'5',                              val:'2' },
-  { ts:'Jun 17, 2026 4:08 PM',  user:'Alex J.',     collection:'Top Shelf Flower',   action:'Updated',   field:'Display Order',        old:'1',                              val:'1' },
-  { ts:'Jun 16, 2026 9:30 AM',  user:'Jordan K.',   collection:'Weekend Specials',   action:'Updated',   field:'Auto-Populate Rules',  old:'Manual only',                    val:'Category: Flower, Vape; Brand: any' },
-  { ts:'Jun 15, 2026 2:55 PM',  user:'Sam W.',      collection:'Top Shelf Flower',   action:'Updated',   field:'Status',               old:'Draft',                          val:'Published' },
-];
-
-const PAGE_SIZE = 10;
-let currentPage = 1;
-const totalPages = Math.ceil(ROWS.length / PAGE_SIZE);
-
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function render() {
-  const start = (currentPage - 1) * PAGE_SIZE;
-  const rows = ROWS.slice(start, start + PAGE_SIZE);
-
-  document.getElementById('tbody').innerHTML = rows.map(r => `
-    <tr>
-      <td class="col-ts">${esc(r.ts)}</td>
-      <td>${esc(r.user)}</td>
-      <td>${esc(r.collection)}</td>
-      <td>${esc(r.action)}</td>
-      <td>${esc(r.field)}</td>
-      <td class="${r.old === '—' ? 'col-muted' : ''}">${esc(r.old)}</td>
-      <td class="${r.val === '—' ? 'col-muted' : ''}">${esc(r.val)}</td>
-    </tr>`).join('');
-
-  if (currentPage === totalPages) {
-    document.getElementById('tbody').innerHTML +=
-      `<tr class="no-earlier-history"><td colspan="7">No earlier history available.</td></tr>`;
-  }
-
-  const end = Math.min(start + PAGE_SIZE, ROWS.length);
-  document.getElementById('page-info').textContent = `Showing ${start + 1}–${end} of ${ROWS.length} changes`;
-  document.getElementById('page-label').textContent = `Page ${currentPage} of ${totalPages}`;
-  document.getElementById('btn-prev').disabled = currentPage <= 1;
-  document.getElementById('btn-next').disabled = currentPage >= totalPages;
-}
-
-function goPage(n) {
-  currentPage = Math.max(1, Math.min(n, totalPages));
-  render();
-}
-
-function toggle(el) {
-  el.classList.toggle('open');
-}
-
-render();
-</script>
 </body>
 </html>
