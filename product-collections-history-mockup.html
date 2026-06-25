@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Collections — History Log Mockup</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 220px;
+      background: #fff;
+      border-right: 1px solid #e8e8e8;
+      flex-shrink: 0;
+      padding-top: 8px;
+    }
+    .sidebar-header {
+      padding: 16px 20px 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.8px;
+    }
+    .sidebar-nav { list-style: none; }
+    .sidebar-nav li {
+      padding: 8px 20px;
+      font-size: 13.5px;
+      color: #555;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+    }
+    .sidebar-nav li:hover { background: #f9f9f9; color: #222; }
+    .sidebar-nav li.active {
+      color: #558B2F;
+      font-weight: 600;
+      border-left-color: #8BC34A;
+      background: #F1F8E9;
+    }
+
+    /* ── Main ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .main-header {
+      padding: 18px 28px;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #111;
+      border-bottom: 1px solid #e8e8e8;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mockup-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: #E65100;
+      background: #FFF3E0;
+      border: 1px solid #FFCC80;
+      border-radius: 4px;
+      padding: 3px 8px;
+    }
+
+    .content {
+      padding: 20px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* ── Accordion ── */
+    .accordion {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: #222;
+    }
+    .accordion-header:hover { background: #fafafa; }
+
+    .chevron {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.18s;
+      color: #aaa;
+    }
+    .accordion.open .chevron { transform: rotate(180deg); }
+
+    .accordion-body {
+      display: none;
+      padding: 18px;
+      border-top: 1px solid #e8e8e8;
+    }
+    .accordion.open .accordion-body { display: block; }
+
+    /* ── History accordion ── */
+    .history-accordion .accordion-header {
+      background: #F1F8E9;
+    }
+    .history-accordion .accordion-header:hover { background: #e8f5e9; }
+
+    .history-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #33691E;
+    }
+
+    .no-earlier-history td {
+      text-align: center;
+      font-size: 12.5px;
+      color: #aaa;
+      padding: 12px;
+      border-bottom: none;
+    }
+
+    /* ── Table ── */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+    thead tr { border-bottom: 2px solid #e0e0e0; }
+
+    th {
+      padding: 8px 12px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 10px 12px;
+      color: #333;
+      border-bottom: 1px solid #f2f2f2;
+      vertical-align: top;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .col-ts    { white-space: nowrap; color: #555; }
+    .col-muted { color: #bbb; }
+
+    /* ── Pagination ── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #777;
+    }
+    .page-btns { display: flex; gap: 6px; align-items: center; }
+    .page-btn {
+      padding: 5px 12px;
+      border: 1px solid #d8d8d8;
+      border-radius: 5px;
+      background: #fff;
+      font-size: 13px;
+      color: #444;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .page-btn:hover:not([disabled]) { border-color: #8BC34A; color: #558B2F; }
+    .page-btn[disabled] { opacity: 0.35; cursor: default; }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">CATALOG</div>
+    <ul class="sidebar-nav">
+      <li>Products</li>
+      <li>Brands</li>
+      <li>Categories</li>
+      <li class="active">Collections</li>
+      <li>Tags</li>
+      <li>Pricing Tiers</li>
+      <li>Rooms</li>
+    </ul>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="main-header">
+      PRODUCT COLLECTIONS
+      <span class="mockup-badge">MOCKUP</span>
+    </div>
+
+    <div class="content">
+
+      <div class="accordion" onclick="toggle(this)">
+        <div class="accordion-header">
+          <span>Collections List</span>
+          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
+        </div>
+        <div class="accordion-body">Collections list and management here.</div>
+      </div>
+
+      <div class="accordion" onclick="toggle(this)">
+        <div class="accordion-header">
+          <span>Auto-Populate Rules</span>
+          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
+        </div>
+        <div class="accordion-body">Auto-populate rule settings here.</div>
+      </div>
+
+      <div class="accordion" onclick="toggle(this)">
+        <div class="accordion-header">
+          <span>Display Settings</span>
+          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
+        </div>
+        <div class="accordion-body">Display settings here.</div>
+      </div>
+
+      <!-- Change History -->
+      <div class="accordion history-accordion open">
+        <div class="accordion-header" onclick="toggle(this.closest('.accordion'))">
+          <span class="history-title">Change History</span>
+          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="#558B2F" stroke-width="2" stroke-linecap="round"><polyline points="4,6 8,10 12,6"/></svg>
+        </div>
+        <div class="accordion-body">
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date / Time</th>
+                  <th>User</th>
+                  <th>Collection</th>
+                  <th>Action</th>
+                  <th>Field</th>
+                  <th>Previous Value</th>
+                  <th>New Value</th>
+                </tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+
+          <div class="pagination">
+            <span id="page-info"></span>
+            <div class="page-btns">
+              <button class="page-btn" id="btn-prev" onclick="goPage(currentPage - 1)">&#8592; Prev</button>
+              <span id="page-label"></span>
+              <button class="page-btn" id="btn-next" onclick="goPage(currentPage + 1)">Next &#8594;</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+const ROWS = [
+  { ts:'Jun 24, 2026 3:41 PM',  user:'Megan R.',    collection:'Weekend Specials',   action:'Updated',   field:'Products',            old:'14 products',                    val:'17 products' },
+  { ts:'Jun 24, 2026 3:41 PM',  user:'Megan R.',    collection:'Weekend Specials',   action:'Updated',   field:'Products Added',       old:'—',                              val:'Blue Dream 1g Pre-Roll, Sour Diesel Cart 500mg, Watermelon Gummies 100mg' },
+  { ts:'Jun 24, 2026 2:15 PM',  user:'Derek T.',    collection:'Flash Sale — June',  action:'Updated',   field:'Status',               old:'Draft',                          val:'Published' },
+  { ts:'Jun 24, 2026 11:08 AM', user:'Megan R.',    collection:'Top Shelf Flower',   action:'Updated',   field:'Auto-Populate Rules',  old:'Category: Flower; Price: any',   val:'Category: Flower; Price: $30+; THC: 25%+' },
+  { ts:'Jun 24, 2026 11:08 AM', user:'Megan R.',    collection:'Top Shelf Flower',   action:'Updated',   field:'Price Filter',         old:'Any',                            val:'$30+' },
+  { ts:'Jun 24, 2026 11:08 AM', user:'Megan R.',    collection:'Top Shelf Flower',   action:'Updated',   field:'THC Filter',           old:'Any',                            val:'25%+' },
+  { ts:'Jun 23, 2026 5:52 PM',  user:'Alex J.',     collection:'Summer Edibles',     action:'Updated',   field:'Name',                 old:'June Edibles',                   val:'Summer Edibles' },
+  { ts:'Jun 23, 2026 4:17 PM',  user:'Sam W.',      collection:'Flash Sale — June',  action:'Created',   field:'Name',                 old:'—',                              val:'Flash Sale — June' },
+  { ts:'Jun 23, 2026 4:17 PM',  user:'Sam W.',      collection:'Flash Sale — June',  action:'Created',   field:'Products',             old:'—',                              val:'7 products' },
+  { ts:'Jun 23, 2026 4:17 PM',  user:'Sam W.',      collection:'Flash Sale — June',  action:'Created',   field:'Status',               old:'—',                              val:'Draft' },
+  { ts:'Jun 23, 2026 1:30 PM',  user:'Megan R.',    collection:'Weekend Specials',   action:'Updated',   field:'Products',             old:'16 products',                    val:'14 products' },
+  { ts:'Jun 23, 2026 1:30 PM',  user:'Megan R.',    collection:'Weekend Specials',   action:'Updated',   field:'Products Removed',     old:'Grape Ape Flower 1g, Lemon Haze Tincture 300mg', val:'—' },
+  { ts:'Jun 22, 2026 10:05 AM', user:'Derek T.',    collection:'Staff Picks — May',  action:'Updated',   field:'Status',               old:'Published',                      val:'Unpublished' },
+  { ts:'Jun 21, 2026 3:00 PM',  user:'Jordan K.',   collection:'Top Shelf Flower',   action:'Updated',   field:'Display Name',         old:'Premium Flower',                 val:'Top Shelf Flower' },
+  { ts:'Jun 21, 2026 3:00 PM',  user:'Jordan K.',   collection:'Top Shelf Flower',   action:'Updated',   field:'Description',          old:'Our finest flower selection.',   val:'Handpicked top-shelf flower, 25%+ THC.' },
+  { ts:'Jun 20, 2026 9:47 AM',  user:'Sam W.',      collection:'Spring Clearance',   action:'Archived',  field:'Status',               old:'Published',                      val:'Archived' },
+  { ts:'Jun 19, 2026 2:22 PM',  user:'Megan R.',    collection:'Staff Picks — June', action:'Updated',   field:'Products',             old:'3 products',                     val:'8 products' },
+  { ts:'Jun 19, 2026 2:22 PM',  user:'Megan R.',    collection:'Staff Picks — June', action:'Updated',   field:'Products Added',       old:'—',                              val:'Gelato 33 Pre-Roll, Pineapple Express Vape, Strawberry Banana Wax, Cherry Pie Flower 3.5g, CBD Relief Tincture 600mg' },
+  { ts:'Jun 18, 2026 11:15 AM', user:'Derek T.',    collection:'Staff Picks — June', action:'Created',   field:'Name',                 old:'—',                              val:'Staff Picks — June' },
+  { ts:'Jun 18, 2026 11:15 AM', user:'Derek T.',    collection:'Staff Picks — June', action:'Created',   field:'Status',               old:'—',                              val:'Draft' },
+  { ts:'Jun 17, 2026 4:08 PM',  user:'Alex J.',     collection:'Summer Edibles',     action:'Updated',   field:'Display Order',        old:'5',                              val:'2' },
+  { ts:'Jun 17, 2026 4:08 PM',  user:'Alex J.',     collection:'Top Shelf Flower',   action:'Updated',   field:'Display Order',        old:'1',                              val:'1' },
+  { ts:'Jun 16, 2026 9:30 AM',  user:'Jordan K.',   collection:'Weekend Specials',   action:'Updated',   field:'Auto-Populate Rules',  old:'Manual only',                    val:'Category: Flower, Vape; Brand: any' },
+  { ts:'Jun 15, 2026 2:55 PM',  user:'Sam W.',      collection:'Top Shelf Flower',   action:'Updated',   field:'Status',               old:'Draft',                          val:'Published' },
+];
+
+const PAGE_SIZE = 10;
+let currentPage = 1;
+const totalPages = Math.ceil(ROWS.length / PAGE_SIZE);
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function render() {
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const rows = ROWS.slice(start, start + PAGE_SIZE);
+
+  document.getElementById('tbody').innerHTML = rows.map(r => `
+    <tr>
+      <td class="col-ts">${esc(r.ts)}</td>
+      <td>${esc(r.user)}</td>
+      <td>${esc(r.collection)}</td>
+      <td>${esc(r.action)}</td>
+      <td>${esc(r.field)}</td>
+      <td class="${r.old === '—' ? 'col-muted' : ''}">${esc(r.old)}</td>
+      <td class="${r.val === '—' ? 'col-muted' : ''}">${esc(r.val)}</td>
+    </tr>`).join('');
+
+  if (currentPage === totalPages) {
+    document.getElementById('tbody').innerHTML +=
+      `<tr class="no-earlier-history"><td colspan="7">No earlier history available.</td></tr>`;
+  }
+
+  const end = Math.min(start + PAGE_SIZE, ROWS.length);
+  document.getElementById('page-info').textContent = `Showing ${start + 1}–${end} of ${ROWS.length} changes`;
+  document.getElementById('page-label').textContent = `Page ${currentPage} of ${totalPages}`;
+  document.getElementById('btn-prev').disabled = currentPage <= 1;
+  document.getElementById('btn-next').disabled = currentPage >= totalPages;
+}
+
+function goPage(n) {
+  currentPage = Math.max(1, Math.min(n, totalPages));
+  render();
+}
+
+function toggle(el) {
+  el.classList.toggle('open');
+}
+
+render();
+</script>
+</body>
+</html>
